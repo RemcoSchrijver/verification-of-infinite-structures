@@ -7,20 +7,6 @@ import Data.Nat
 data CoList a = Nil
               | (:::) a (Thunk (CoList a))
 
-repeatCoList :: a -> CoList a
-repeatCoList x
-  = x :::
-      \case
-          Data.Thunk.Thunk.force -> repeatCoList x
-
-fibonacciCoList :: Nat -> Nat -> CoList Nat
-fibonacciCoList n1 n2
-  = n1 :::
-      \case
-          Data.Thunk.Thunk.force -> n2 :::
-                                      \case
-                                          Data.Thunk.Thunk.force -> fibonacciCoList n2 (n1 +++ n2)
-
 hdCoList :: CoList a -> Maybe a
 hdCoList Nil = Nothing
 hdCoList (x ::: xs) = Just x

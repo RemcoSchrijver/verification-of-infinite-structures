@@ -22,13 +22,14 @@ data CoList (a : Set) (@0 i : Size) : Set where
 {-# COMPILE AGDA2HS CoList #-}
 
 -- Special constructors
+-- Compile pragmas are commented out because they are unsupported as of now
 repeatCoList : {a : Set} {@0 i : Size} → a → CoList a i
 repeatCoList x = x ::: (λ where .force → repeatCoList x)
-{-# COMPILE AGDA2HS repeatCoList #-}
+-- {-# COMPILE AGDA2HS repeatCoList #-}
 
 fibonacciCoList : {@0 i : Size} → Nat → Nat → CoList Nat i
 fibonacciCoList n1 n2 = n1 ::: (λ where .force → (n2 ::: λ where .force → (fibonacciCoList n2 (n1 +++ n2))))
-{-# COMPILE AGDA2HS fibonacciCoList #-}
+-- {-# COMPILE AGDA2HS fibonacciCoList #-}
 
 -- Basic Functions
 
