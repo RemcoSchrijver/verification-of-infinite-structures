@@ -1,2 +1,5 @@
-import Data.Tree
-import Data.Tree.Properties
+{-# OPTIONS --guardedness #-}
+{-# OPTIONS --sized-types #-}
+import Data.InfiniteList
+import Data.Delay
+import Data.CoList
