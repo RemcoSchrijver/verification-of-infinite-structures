@@ -19,22 +19,21 @@ record InfiniteList (a : Set) : Set where
 open InfiniteList public
 
 -- Special co-pattern constructors
--- Copatterns compile pragmas are commented out because they are unsupported
 
 infNatList : Nat → InfiniteList Nat
 hd (infNatList n) = n 
 tl (infNatList n) = (infNatList (Suc n)) 
--- {-# COMPILE AGDA2HS infNatList #-}
+{-# COMPILE AGDA2HS infNatList #-}
 
 repeatInf : {a : Set} (x : a) → InfiniteList a
 hd (repeatInf x) = x
 tl (repeatInf x) = repeatInf x
--- {-# COMPILE AGDA2HS repeatInf #-}
+{-# COMPILE AGDA2HS repeatInf #-}
 
 fibonacci : Nat → Nat → InfiniteList Nat
 hd (fibonacci n1 n2) = n1
 tl (fibonacci n1 n2) = (fibonacci (n2) (n1 +++ n2))
--- {-# COMPILE AGDA2HS fibonacci #-}
+{-# COMPILE AGDA2HS fibonacci #-}
 
 -- Basic functions
 
@@ -62,27 +61,26 @@ dropInf (Suc n) list = dropInf n (tlInf list)
 {-# COMPILE AGDA2HS dropInf #-}
 
 -- Higher order functions
--- Copatterns compile pragmas are commented out because they are unsupported
 
 evenInf : {a : Set} → InfiniteList a → InfiniteList a
 hd (evenInf xs) = hd xs
 tl (evenInf xs) = evenInf (tl (tl xs)) 
--- {-# COMPILE AGDA2HS evenInf #-}
+{-# COMPILE AGDA2HS evenInf #-}
 
 oddInf : {a : Set} → InfiniteList a → InfiniteList a 
 oddInf xs = evenInf (tl xs)
--- {-# COMPILE AGDA2HS oddInf #-}
+{-# COMPILE AGDA2HS oddInf #-}
 
 splitInf : {a : Set} → InfiniteList a → InfiniteList a × InfiniteList a
 splitInf xs = (evenInf xs , oddInf xs)
--- {-# COMPILE AGDA2HS split #-}
+{-# COMPILE AGDA2HS splitInf #-}
 
 mergeInf : {a : Set} → InfiniteList a × InfiniteList a → InfiniteList a
 hd (mergeInf (xs , ys)) = hd xs
 tl (mergeInf (xs , ys)) = mergeInf (ys , tl xs) 
--- {-# COMPILE AGDA2HS merge #-}
+{-# COMPILE AGDA2HS mergeInf #-}
 
 mapInf : {a b : Set} → InfiniteList a → (a → b) → InfiniteList b
 hd (mapInf list f) = f (hd list)
 tl (mapInf list f) = mapInf list f
--- {-# COMPILE AGDA2HS map #-}
+{-# COMPILE AGDA2HS mapInf #-}
